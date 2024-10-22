@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -56,21 +56,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		69A9D8C02CC75CA300F903B7 /* heart-sos Watch App */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "heart-sos Watch App";
-			sourceTree = "<group>";
-		};
-		69A9D8D12CC75CA500F903B7 /* heart-sos Watch AppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "heart-sos Watch AppTests";
-			sourceTree = "<group>";
-		};
-		69A9D8DB2CC75CA500F903B7 /* heart-sos Watch AppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "heart-sos Watch AppUITests";
-			sourceTree = "<group>";
-		};
+		69A9D8C02CC75CA300F903B7 /* heart-sos Watch App */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "heart-sos Watch App"; sourceTree = "<group>"; };
+		69A9D8D12CC75CA500F903B7 /* heart-sos Watch AppTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "heart-sos Watch AppTests"; sourceTree = "<group>"; };
+		69A9D8DB2CC75CA500F903B7 /* heart-sos Watch AppUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "heart-sos Watch AppUITests"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +224,7 @@
 				};
 			};
 			buildConfigurationList = 69A9D8B32CC75CA300F903B7 /* Build configuration list for PBXProject "heart-sos" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -244,7 +233,6 @@
 			);
 			mainGroup = 69A9D8AF2CC75CA300F903B7;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 69A9D8B72CC75CA300F903B7 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -450,13 +438,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "heart-sos Watch App/heart-sos Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"heart-sos Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = L5YSLP9JMP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "heart-sos-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "heart-sos";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to monitor your heart rate and respiratory rate.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to monitor your heart rate and respiratory rate.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -480,13 +472,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "heart-sos Watch App/heart-sos Watch App.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"heart-sos Watch App/Preview Content\"";
 				DEVELOPMENT_TEAM = L5YSLP9JMP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "heart-sos-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "heart-sos";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "We need access to your health data to monitor your heart rate and respiratory rate.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "We need access to your health data to monitor your heart rate and respiratory rate.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
