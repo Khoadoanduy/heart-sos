@@ -6,6 +6,7 @@ struct ContentView: View {
     @State private var heartRate: Double = 0
     @State private var respiratoryRate: Double = 0
     private let healthStore = HKHealthStore()
+    @State private var timer: Timer?
     
     var body: some View {
         VStack {
@@ -14,7 +15,8 @@ struct ContentView: View {
         }
         .onAppear {
             requestHealthKitPermissions()
-            fetchHealthData()
+//            startFetchingHealthData()
+//            fetchHealthData()
         }
         .onChange(of: heartRate) {
             checkHealthData()
@@ -23,6 +25,17 @@ struct ContentView: View {
             checkHealthData()
         }
         
+    }
+    private func startFetchingHealthData() {
+        // Start a timer to fetch health data every 10 seconds
+        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+            fetchHealthData()
+        }
+    }
+    private func stopFetchingHealthData() {
+        // Invalidate the timer when the view disappears
+        timer?.invalidate()
+        timer = nil
     }
     
     private func requestHealthKitPermissions() {
@@ -39,6 +52,7 @@ struct ContentView: View {
         healthStore.requestAuthorization(toShare: typesToShare, read: typesToRead) { success, error in
             if success {
                 print("HealthKit authorization granted.")
+                startFetchingHealthData()
                 fetchHealthData()
             } else {
                 print("HealthKit authorization denied: \(String(describing: error))")
