@@ -15,6 +15,7 @@ struct ContentView: View {
         }
         .onAppear {
             requestHealthKitPermissions()
+            startHeartRateObserver()
 //            startFetchingHealthData()
 //            fetchHealthData()
         }
@@ -28,8 +29,9 @@ struct ContentView: View {
     }
     private func startFetchingHealthData() {
         // Start a timer to fetch health data every 10 seconds
-        timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             fetchHealthData()
+            printHeartRate()
         }
     }
     private func stopFetchingHealthData() {
@@ -73,6 +75,7 @@ struct ContentView: View {
                 return
             }
             heartRate = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
+            print("Current Heart Rate: \(heartRate)")
         }
         healthStore.execute(query)
     }
@@ -100,6 +103,34 @@ struct ContentView: View {
             WKExtension.shared().openSystemURL(url)
         }
     }
+    private func printHeartRate() { // {{ edit_3 }} - New function to print heart rate
+            print("Heart Rate: \(heartRate)")
+    }
+    
+    private func startHeartRateObserver() {
+        guard let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
+            print("Heart rate type is not available.")
+            return
+        }
+        
+        // Create an observer query to listen for heart rate changes
+        let observerQuery = HKObserverQuery(sampleType: heartRateType, predicate: nil) { [self] _, completionHandler, error in
+            if let error = error {
+                print("Error setting up observer query: \(error.localizedDescription)")
+                return
+            }
+            
+            // Fetch the latest heart rate data
+            fetchHeartRate()
+            
+            // Call the completion handler to let HealthKit know that the query has been processed
+            completionHandler()
+        }
+        
+        // Execute the observer query
+        healthStore.execute(observerQuery)
+    }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
