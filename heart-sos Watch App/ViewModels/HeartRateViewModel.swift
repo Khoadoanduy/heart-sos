@@ -33,7 +33,6 @@ class HeartRateViewModel: ObservableObject {
         DispatchQueue.main.async {
             // Update the heart rate model with the latest heart rate value, defaulting to 0.0 if no samples are available.
             self.heartRateModel.heartRate = samples.last?.quantity.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0.0
-            print(self.heartRateModel.heartRate)
         }
     }
 }
