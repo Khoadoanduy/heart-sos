@@ -10,29 +10,64 @@ import HealthKit
 
 class HeartRateViewModel: ObservableObject {
     
-    // Declare a published property to hold heart rate data, initializing it with a heart rate of 0.0.
     @Published var heartRateModel: HeartRateModel = HeartRateModel(heartRate: 0.0)
     
-    // Define a function to start querying heart rate data.
+    private var lowHeartRateTimer: Timer?
+    private let lowHeartRateThreshold: Double = 120 // Example threshold
+    private let lowHeartRateDuration: TimeInterval = 10 // 10 seconds
+
     func startHeartRateQuery() {
-        // Use the shared instance of HeartRateManager to start the query, using the startHeartRateQuery function inside it.
         HeartRateManager.shared.startHeartRateQuery { [weak self] samples in
-            // Call the process method to handle the returned samples.
             self?.process(samples)
         }
     }
     
-    // Define a private function to process the retrieved samples.
     private func process(_ samples: [HKSample]?) {
-        // Ensure the samples are of type HKQuantitySample.
-        guard let samples = samples as? [HKQuantitySample] else {
+        guard let samples = samples as? [HKQuantitySample],
+              let latestSample = samples.last else {
             return
         }
 
-        // This code runs on the main thread to update the UI.
+        // Update heart rate on the main thread
         DispatchQueue.main.async {
-            // Update the heart rate model with the latest heart rate value, defaulting to 0.0 if no samples are available.
-            self.heartRateModel.heartRate = samples.last?.quantity.doubleValue(for: .count().unitDivided(by: .minute())) ?? 0.0
+            let heartRate = latestSample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+            self.heartRateModel.heartRate = heartRate
+            print("Updated Heart Rate: \(heartRate)")
+            self.checkHeartRate()
         }
     }
+    
+    private func checkHeartRate() {
+        if heartRateModel.heartRate < lowHeartRateThreshold {
+            print("Heart rate below threshold, starting timer")
+            startLowHeartRateTimer()
+        } else {
+            print("Heart rate above threshold, stopping timer")
+            stopLowHeartRateTimer()
+        }
+    }
+
+    private func startLowHeartRateTimer() {
+        stopLowHeartRateTimer() // Stop any existing timer
+
+        DispatchQueue.main.async { [self] in
+            lowHeartRateTimer = Timer.scheduledTimer(withTimeInterval: lowHeartRateDuration, repeats: false) { [weak self] _ in
+                guard let self = self else { return }
+                print("Timer finished, calling emergency services")
+                self.callEmergencyServices()
+            }
+        }
+    }
+
+    private func stopLowHeartRateTimer() {
+        lowHeartRateTimer?.invalidate()
+        lowHeartRateTimer = nil
+    }
+
+    private func callEmergencyServices() {
+        // Code to initiate a call to 911
+        print("Calling 911...")
+        // Implement the actual call functionality here
+    }
 }
+
